@@ -1,0 +1,97 @@
+1.个人操作台页面
+
+    可用优惠券浮层是否应该添加一个使用条件的字段（如：消费满188元使用），让商户自己去判断是否在目前可用的范围内？
+
+2.登陆页面
+
+    关于登陆页面的设计排版问题，需要进行优化？
+
+3.优惠券创建页面
+
+
+
+完成：
+  1.完善浮层中的优惠券选择到筛选列表中，并实现优惠券折扣结算
+
+  1.create_obj:{
+    coupon_expiration_type:1, //有效期方式
+    coupon_startdate_type_value: '',
+    coupon_expiration_type_value:{
+      s_day:1, //当天默认传0
+      s_unit:'day',
+      s_date:2017-3-15, // 用户领取后获取到的生效具体日期
+      expiry_day:3,
+      expiry_unit:'day',
+      expiry_date:2017-3-18 // 用户领取后获取到的到期具体日期
+    },
+    coupon_use_type:{
+      code:2,
+      title:'满减'
+    },
+    coupon_use_type_value:{
+      value:88,
+      label:'满88元可使用'
+    },
+    coupon_get_type:{
+      code:3,
+      title:'特定操作'
+    },
+    coupon_get_type_value:[
+    {
+      code:1,
+      title:'首次关注'
+    },
+    {
+      code:2,
+      title:'首次充值'
+    }
+    ],
+    coupon_send_type:{
+      code:2,
+      title:'商家发放'
+    },
+    coupon_use_store_type:{
+      code:2,
+      title:'部分门店',
+    },
+    coupon_use_store_type_value:[
+    {
+      store_name:'小快外卖仙霞店',
+    }
+    ],
+  }
+
+  2.create_obj: {
+    coupon_name: title,
+    coupon_discount_price: discount, //折扣金额
+    coupon_discount_ratio: discount, //折扣比例
+    coupon_color: typecode,
+    coupon_expiration_type: xx, // 有效期方式（1-有效期，2-固定日期）
+    coupon_startdate_type_value: xx, // 生效时间
+    coupon_expiration_type_value: xx, // 过期时间
+    coupon_use_type: {
+      code: 1,
+      title: '无门槛'
+    },
+    coupon_use_type_value: '',
+    coupon_get_type: {
+      code: 1,
+      title: '满送'
+    },
+    coupon_get_type_value: {
+      value: 200,
+      label: '满200元可获得'
+    },
+    coupon_send_type: {
+      code: 1,
+      title: '用户自领'
+    },
+    coupon_member_can_get: 1, // 全部会员默认传空，1-普通会员，2-白银。。。。
+    coupon_get_limit: 1, // 默认为1
+    coupon_stock: 1000, //库存
+    coupon_use_store_type: {
+      code: 1,
+      title: '全部门店',
+    },
+    coupon_use_store_type_value: '',
+  }

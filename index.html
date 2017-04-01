@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>vue-vip3</title>
+
+    <!-- using cdn -->
+    <link rel="stylesheet" href="http://s.wxkydd.com/libs/bootstrap/3.3.4/bootstrap.min.css">
+    <link rel="stylesheet" href="http://s.wxkydd.com/libs/datatable/1.10.11/datatables-rs-bt.min.css">
+
+    
+
+    <!-- 双日历插件样式 -->
+    <link rel="stylesheet" href="./src/assets/css/dateRange.css">
+    <!-- 颜色插件样式 -->
+    <link rel="stylesheet" href="./src/assets/css/spectrum.css">
+    <link rel="stylesheet" href="./src/assets/css/selectcolor.css">
+    <link rel="stylesheet" href="./src/assets/css/main.css">
+
+    <!-- iconfont -->
+    <link rel="stylesheet" href="./src/assets/css/iconfont.css">
+
+    <!-- using cdn -->
+    <script type='text/javascript' src='http://s.wxkydd.com/libs/jquery/2.1.4/jquery.min.js'></script>
+    <script type="text/javascript" src="http://s.wxkydd.com/libs/flexible/1.0.0/flexible.js"></script>
+    <script type="text/javascript" src="http://s.wxkydd.com/libs/bootstrap/3.3.4/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://s.wxkydd.com/libs/datatable/1.10.11/datatables-rs-bt.min.js"></script>
+    <script type="text/javascript" src="http://s.wxkydd.com/libs/layerjs/3.0.3/layer.js"></script>
+
+
+    <script type="text/javascript" src="http://s.wxkydd.com/libs/echarts/3.2.3/echarts.min.js"></script>
+    <!-- 双日历插件js -->
+    <script src='./src/assets/js/dateRange.js'></script>
+    <!-- 颜色插件js -->
+    <script src='./src/assets/js/docs.js'></script>
+    <script src='./src/assets/js/spectrum.js'></script>
+  </head>
+
+  <body>
+
+    <!-- 下载提示 -->
+    <style>
+        #loaded{
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 5px;
+            color:#fff;
+        }
+    </style>
+    <div id="loaded"></div>
+    <!-- 下载提示 -->
+
+    <div id="app"></div>
+    <script src="./dist/build.js"></script>
+  </body>
+
+
+  <!-- 自动更新 -->
+  <script type="text/javascript">
+        /*
+         1. Check the manifest for version (from your running "old" app).
+         2. If the version is different from the running one, download new package to a temp directory.
+         3. Unpack the package in temp.
+         4. Run new app from temp and kill the old one (i.e. still all from the running app).
+         5. The new app (in temp) will copy itself to the original folder, overwriting the old app.
+         6. The new app will run itself from original folder and exit the process.
+        */
+
+        var gui = require('nw.gui');
+        var pkg = require('./package.json'); // Insert your app's manifest here
+        var updater = require('node-webkit-updater');
+        var path= require('path'); 
+        var unpackToPath = path.resolve('.');
+
+        var upd = new updater(pkg);
+        var copyPath, execPath;
+        
+        // console.log('gui-----', gui);
+        // console.log('pkg-----', pkg);
+        // console.log('upd-----', upd);
+
+        // 延时2s检查
+        setTimeout(function(){
+            // ------------- Step 1 -------------
+            upd.checkNewVersion(function(error, newVersionExists, manifest) {
+                console.log(newVersionExists);
+                console.log(manifest);
+                if (!error && newVersionExists) {
+                    var obj = layer.confirm('发现新版本，是否现在更新？', {
+                      btnAlign:'c',
+                      btn: ['立即更新','残忍拒绝'] //按钮
+                    }, function(){
+                        jQuery('.layui-layer').hide();
+                        // ------------- Step 2 -------------
+                        var newVersion = upd.download(function(error, filename) {
+                            if (!error) {
+                                // console.log(filename);
+                                // console.log('unpackToPath', unpackToPath);
+
+                                // ------------- Step 3 -------------
+                                var count = 0; // 解决uppackTo回调了2次的问题
+                                upd.unpackTo(filename, function(error, newAppPath) {
+                                    // console.log('cb msg', error);
+                                    // console.log('更新成功！');
+                                    // console.log('manifest', manifest);
+                                    if(count < 1) {
+                                        count++;
+                                        layer.alert('更新成功！点击确定，关闭应用，然后重新打开！', {
+                                            btnAlign:'c'
+                                        },function(){
+                                            gui.App.quit();
+                                        }); 
+                                    }
+                                }, manifest, unpackToPath);
+                            }
+                        }, manifest);
+
+                        var loaded = 0;
+                        newVersion.on('data', function(chunk){
+                          loaded+=chunk.length;
+                          document.getElementById('loaded').innerHTML = "新版本下载中... " + Math.floor(loaded / newVersion['content-length'] * 100) + '%';
+                        });
+
+                    }, function(){
+                        // 啥也不干
+                    });
+                }
+            });
+        }, 1500);     
+  </script>
+
+</html>

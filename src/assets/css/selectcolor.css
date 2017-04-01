@@ -1,0 +1,31 @@
+/*颜色选择器样式修改*/
+.sp-picker-container{
+    display:none;
+}
+.sp-replacer{
+    border:2px solid #eee;
+    border-radius:5px;
+}
+.sp-replacer.sp-disabled {
+    cursor: default;
+    border:2px solid #eee;
+}
+.sp-palette-container {
+    border-right: solid 1px #eee;
+}
+.sp-replacer{
+    background:#fff;
+}
+.sp-replacer:hover, .sp-replacer.sp-active {
+    border-color: #eee;
+    color: #111;
+}
+.sp-container {
+    border-radius: 0;
+    background-color: #eee;
+    border: solid 1px #fff;
+    padding: 0;
+}
+.sp-preview{
+    border:0;
+}

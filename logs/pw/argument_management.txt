@@ -1,0 +1,34 @@
+
+1.dataTable开启服务器模式
+
+    固定参数：
+      let order_number = data.order[0].column
+      let order_dir = data.order[0].dir
+      let order_column = data.columns[order_number].data
+
+      settings.ajax.data = {
+        draw: data.draw, // dataTable画数值
+        start: data.start, // dataTable数据开始位置
+        length: data.length, // dataTable每页展示的个数
+        search_value: data.search.value, // dataTable搜索的关键词
+        order_column: order_column, // dataTable排序字段名
+        order_dir: order_dir, // dataTable排序方向
+        serviceSide_mode: true, // dataTable开启服务器模式标识
+      }
+
+
+2.vue
+
+    data
+      规范：
+        1.采用 名词 命名
+        2.采用 形容词 + 名词 命名
+
+    methods
+      规范：
+        1.采用 动词 + 名词 命名
+
+3.ajax
+
+    参数命名规定：
+        operator_user_id           // 当前操作员的users表id

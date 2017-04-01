@@ -1,0 +1,27 @@
+
+
+{
+	"sProcessing":   "处理中...",
+	"sLengthMenu":   "每页显示 _MENU_",
+	"sZeroRecords":  "没有匹配的结果",
+	"sInfo":         "第 _START_ 至 _END_ 项，共 _TOTAL_ 项",
+	"sInfoEmpty":    "显示第 0 至 0 项，共 0 项",
+	"sInfoFiltered": "( 从 _MAX_ 项中过滤 )",
+	"sInfoPostFix":  "",
+	"sSearch":       "",
+	"sSearchPlaceholder":       "搜索任意内容...",
+	"sUrl":          "",
+	"sEmptyTable":     "无数据",
+	"sLoadingRecords": "加载中...",
+	"sInfoThousands":  ",",
+	"oPaginate": {
+	    "sFirst":    "首页",
+	    "sPrevious": "上页",
+	    "sNext":     "下页",
+	    "sLast":     "末页"
+	},
+	"oAria": {
+	    "sSortAscending":  ": 升序排列",
+	    "sSortDescending": ": 降序排列"
+	}
+}
